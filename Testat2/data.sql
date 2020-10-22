@@ -37,4 +37,5 @@ INSERT INTO profi (spielerid, rank, tournament) VALUES
     (7, 8, 1);
 
 INSERT INTO beginner (spielerid, zugelassen, qualifying) VALUES
-    (1, true, 1)
+    (8, true, 1),
+    (9, true, 1),
