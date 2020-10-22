@@ -36,6 +36,35 @@ INSERT INTO profi (spielerid, rank, tournament) VALUES
     (6, 9, 1),
     (7, 8, 1);
 
-INSERT INTO beginner (spielerid, zugelassen, qualifying) VALUES
-    (8, true, 1),
-    (9, true, 1),
+INSERT INTO beginner (spielerid, zugelassen) VALUES
+    (8, false),
+    (9, false),
+    (10, false),
+    (11, false),
+    (12, false),
+    (13, false),
+    (14, false),
+    (15, false);
+
+INSERT INTO qualifying (id, startdatum, endedatum) VALUES
+    (1, '2020-10-08', '2020-10-10'),
+    (2, '2020-10-9', '2020-10-20'),
+    (3, '2020-10-16', '2020-11-02'),
+    (4, '2020-11-05', '2020-11-20');
+
+INSERT INTO qualifyingspieler (id, Spielerid) VALUES
+    (1, 8),
+    (1, 9),
+    (1, 11),
+    (1, 12),
+    (2, 8),
+    (2, 10),
+    (2, 11),
+    (2, 15),
+    (3, 12),
+    (3, 14),
+    (3, 15),
+    (4, 10),
+    (4, 13),
+    (4, 14),
+    (4, 15);
