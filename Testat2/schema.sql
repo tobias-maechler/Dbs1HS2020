@@ -43,7 +43,6 @@ CREATE TABLE qualifying (
 CREATE TABLE beginner (
     spielerid INTEGER NOT NULL REFERENCES spieler(id),
     zugelassen BOOLEAN NOT NULL,
-    qualifying INTEGER NOT NULL REFERENCES qualifying(id)
 );
 
 CREATE TABLE qualifyingspieler (
