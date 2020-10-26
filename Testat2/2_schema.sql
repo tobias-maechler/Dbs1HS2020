@@ -1,7 +1,4 @@
-/*
- * Tabellen erzeugen
- */
-
+-- Autoren: Kevin Löffler & Tobias Mächler
 
 CREATE TABLE spieler (
     id INTEGER PRIMARY KEY,

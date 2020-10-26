@@ -1,3 +1,5 @@
+-- Autoren: Kevin Löffler & Tobias Mächler
+
 INSERT INTO spieler (id, vorname, nachname, chipzahl, aktiv) VALUES
     -- Profis
     (1, 'Daniel', 'Negreanu', 100000, true),
