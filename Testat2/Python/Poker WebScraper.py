@@ -14,7 +14,7 @@ from urllib.request import Request
 
 surNames = []
 familyNames = []
-Prizes = []
+prizes = []
 
 # First Pass
 
@@ -26,6 +26,7 @@ html = bs4.BeautifulSoup(source, 'html.parser')
 
 for n in html.find_all(class_ = 'name'):
     cleanName = n.text.strip()
+    cleanName = cleanName.replace("\'", "")
     fullName = cleanName.rsplit(' ', 1)
     surNames.append(fullName[0])
     familyNames.append(fullName[1])
@@ -34,7 +35,7 @@ for p in html.find_all(class_ = 'prize'):
     pClean = p.text.strip()
     pNew = pClean[2:].replace(',', '')
     if pNew != '' and pNew.isdigit():
-        Prizes.append(pNew)
+        prizes.append(pNew)
 
 print("Finished pass 1")
 
@@ -59,7 +60,7 @@ for i in range(2, 101):
         pClean = p.text.strip()
         pNew = pClean[2:].replace(',', '')
         if pNew != '' and pNew.isdigit():
-            Prizes.append(pNew)
+            prizes.append(pNew)
 
     print("Finished pass {p}".format(p = i))
 """
@@ -67,4 +68,4 @@ for i in range(2, 101):
 
 print(surNames)
 print(familyNames)
-print(Prizes)
+print(prizes)
