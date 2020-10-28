@@ -4,6 +4,7 @@ CREATE TABLE spieler (
     id INTEGER PRIMARY KEY,
     vorname VARCHAR(50) NOT NULL,
     nachname VARCHAR(50) NOT NULL,
+    gewinn INTEGER NOT NULL,
     chipzahl INTEGER NOT NULL,
     aktiv BOOLEAN
 );

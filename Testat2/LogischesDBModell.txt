@@ -3,6 +3,7 @@ Spieler (
     ID PK INTEGER,
     Vorname VARCHAR(80) NOT NULL,
     Nachname VARCHAR(80) NOT NULL,
+    Gewinn INTEGER NOT NULL,
     Chipzahl INTEGER,
     Aktiv BOOLEAN
 )
