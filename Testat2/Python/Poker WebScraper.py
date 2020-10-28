@@ -1,6 +1,5 @@
 import bs4
 import urllib
-import random
 from urllib.request import Request
 
 ### Tasks
@@ -8,6 +7,7 @@ from urllib.request import Request
 # 1001 - 10'000 are Beginners
 # New Field 'Preisgeld'
 # In DB create 150 Tournaments
+# In DB create 80 Floorman
 # In DB create 100 Qualifyings
 
 # Init Lists
