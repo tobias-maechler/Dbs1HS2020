@@ -40,7 +40,7 @@ for p in html.find_all(class_ = 'prize'):
 print("Finished pass 1")
 
 # Pass 2 - 100
-"""
+
 for i in range(2, 101):
     req = Request(f'https://pokerdb.thehendonmob.com/ranking/all-time-money-list/{i}', headers={'User-Agent': 'Mozilla/5.0'})
     source = urllib.request.urlopen(req).read()
@@ -63,7 +63,7 @@ for i in range(2, 101):
             prizes.append(pNew)
 
     print("Finished pass {p}".format(p = i))
-"""
+
 # Print Output
 
 print(surNames)
