@@ -28,8 +28,13 @@ for n in html.find_all(class_ = 'name'):
     cleanName = n.text.strip()
     cleanName = cleanName.replace("\'", "")
     fullName = cleanName.rsplit(' ', 1)
-    surNames.append(fullName[0])
-    familyNames.append(fullName[1])
+    # Check for 2 Names:
+    if len(fullName) == 2:
+        surNames.append(fullName[0])
+        familyNames.append(fullName[1])
+    elif len(fullName) == 1:
+        surNames.append(fullName[0])
+        familyNames.append("")
 
 for p in html.find_all(class_ = 'prize'):
     pClean = p.text.strip()
@@ -48,6 +53,7 @@ for i in range(2, 101):
 
     for n in html.find_all(class_ = 'name'):
         cleanName = n.text.strip()
+        cleanName = cleanName.replace("\'", "")
         fullName = cleanName.rsplit(' ', 1)
         # Check for 2 Names:
         if len(fullName) == 2:
@@ -56,6 +62,7 @@ for i in range(2, 101):
         elif len(fullName) == 1:
             surNames.append(fullName[0])
             familyNames.append("")
+
     for p in html.find_all(class_ = 'prize'):
         pClean = p.text.strip()
         pNew = pClean[2:].replace(',', '')
