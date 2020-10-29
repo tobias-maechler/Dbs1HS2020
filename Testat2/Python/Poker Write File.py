@@ -43,6 +43,19 @@ def randomDate():
     year = random.randint(2015, 2023)
     return f"'{day:02}-{month:02}-{year}'"
 
+def randomEndDate(startDate):
+    day = int(startDate[1] + startDate[2])
+    month = int(startDate[4] + startDate[5])
+    year = int(startDate[7] + startDate[8] + startDate[9] + startDate[10])
+    if day < 20:
+        day += random.randint(1, 10)
+    elif month < 11:
+        month += random.randint(1, 2)
+    else:
+        year += 1
+        month = 1
+    return f"'{day:02}-{month:02}-{year}'"
+
 def rankCounter(int):
     if int <= 500:
         if int <= 100:
@@ -163,7 +176,7 @@ insertScript.writelines([
     Format.wl("COPY qualifying (id, startdatum, endedatum) FROM stdin WITH (ENCODING 'UTF8');")
 ])
 
-# Loop
+
 
 insertScript.writelines(";\n\n")
 
