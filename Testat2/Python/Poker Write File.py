@@ -1,5 +1,6 @@
 import random
 import names
+import data
 
 # Data:
 class Content:
@@ -39,7 +40,7 @@ def pickFloorman():
 
 def randomDate():
     day = random.randint(1, 31)
-    month = random.randint(1, 13)
+    month = random.randint(1, 12)
     year = random.randint(2015, 2023)
     return f"'{day:02}-{month:02}-{year}'"
 
@@ -177,6 +178,14 @@ insertScript.writelines([
 ])
 
 
+for i in range(100):
+    qualifyingStartDate = randomDate()
+
+    insertScript.writelines(Format.tab + "(" +
+        "{id}".format(id = i + 1) + Format.sep +
+        "{start}".format(start = qualifyingStartDate) + Format.sep +
+        "{end}".format(end = randomEndDate(qualifyingStartDate)) +
+        ")," + Format.ret)
 
 insertScript.writelines(";\n\n")
 
@@ -186,7 +195,11 @@ insertScript.writelines([
     Format.wl("COPY qualifyingspieler (id, Spielerid) FROM stdin WITH (ENCODING 'UTF8');")
 ])
 
-# Loop
+for i in range(9000):
+    insertScript.writelines(Format.tab + "(" +
+        "{qID}".format(qID = random.randint(1, 100)) + Format.sep +
+        "{sID}".format(sID = i + 1001) +
+        ")," + Format.ret)
 
 insertScript.writelines(";\n\n")
 
