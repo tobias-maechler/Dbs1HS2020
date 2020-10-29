@@ -85,23 +85,39 @@ def rankCounter(int):
 
 insertScript = File_object = open(r"/Users/Kevin1/Kevin/Study/Sem1/Dbs/Testat2/Python/Export/inserts python.sql", "w")
 
+# Write Comments
+insertScript.writelines([Format.wl("-- Autoren: Kevin Löffler & Tobias Mächler")])
+insertScript.writelines([Format.wl("-- Player data scraped from thehendonmob.com")])
+insertScript.writelines([Format.ret])
+
 insertScript.writelines([
     Format.wl("COPY spieler (id, vorname, nachname, gewinn, chipzahl, aktiv) FROM stdin WITH (ENCODING 'UTF8');")
 ])
 
 ### create SPIELER table:
 
-for i in range(len(Content.surNames)):
+lastItem = len(data.surNames) - 1
+
+for i in range(lastItem):
     insertScript.writelines(Format.tab + "(" +
         "{id}".format(id = i + 1) + Format.sep +
-        "'{name}'".format(name = Content.surNames[i]) + Format.sep +
-        "'{name}'".format(name = Content.familyNames[i]) + Format.sep +
-        "{prize}".format(prize = Content.prizes[i]) + Format.sep +
+        "'{name}'".format(name = data.surNames[i]) + Format.sep +
+        "'{name}'".format(name = data.familyNames[i]) + Format.sep +
+        "{prize}".format(prize = data.prizes[i]) + Format.sep +
         "100000" + Format.sep +
         "true" +
         ")," + Format.ret)
 
-insertScript.writelines(";\n\n")
+insertScript.writelines(Format.tab + "(" +
+    "{id}".format(id = lastItem + 1) + Format.sep +
+    "'{name}'".format(name = data.surNames[lastItem]) + Format.sep +
+    "'{name}'".format(name = data.familyNames[lastItem]) + Format.sep +
+    "{prize}".format(prize = data.prizes[lastItem]) + Format.sep +
+    "100000" + Format.sep +
+    "true" +
+    ");" + Format.ret)
+
+insertScript.writelines("\n\n")
 
 ### create FLOORMAN table
 
@@ -109,7 +125,7 @@ insertScript.writelines([
     Format.wl("COPY floorman (id, vorname, nachname, erfahrung) FROM stdin WITH (ENCODING 'UTF8');")
 ])
 
-for i in range(75):
+for i in range(74):
     # Build Floorman List:
     id = i + 1
     xp = random.randint(1, 3)
@@ -122,7 +138,14 @@ for i in range(75):
         "{xp}".format(xp = xp) +
         ")," + Format.ret)
 
-insertScript.writelines(";\n\n")
+insertScript.writelines(Format.tab + "(" +
+    "{id}".format(id = 75) + Format.sep +
+    "'{first}'".format(first = names.get_first_name()) + Format.sep +
+    "'{last}'".format(last = names.get_last_name()) + Format.sep +
+    "{xp}".format(xp = xp) +
+    ");" + Format.ret)
+
+insertScript.writelines("\n\n")
 
 ### create TOURNAMENT table
 
@@ -130,7 +153,7 @@ insertScript.writelines([
     Format.wl("COPY tournament (id, maxspieler, preisgeld, datum, ort, floorman) FROM stdin WITH (ENCODING 'UTF8');")
 ])
 
-for i in range(100):
+for i in range(99):
     insertScript.writelines(Format.tab + "(" +
         "{id}".format(id = i + 1) + Format.sep +
         "24" + Format.sep +
@@ -140,7 +163,16 @@ for i in range(100):
         "{floorman}".format(floorman = pickFloorman()) +
         ")," + Format.ret)
 
-insertScript.writelines(";\n\n")
+insertScript.writelines(Format.tab + "(" +
+    "{id}".format(id = 100) + Format.sep +
+    "24" + Format.sep +
+    "{prize}".format(prize = random.randint(10000, 1000000)) + Format.sep +
+    "{date}".format(date = randomDate()) + Format.sep +
+    "{place}".format(place = random.choices((Content.places))) + Format.sep +
+    "{floorman}".format(floorman = pickFloorman()) +
+    ");" + Format.ret)
+
+insertScript.writelines("\n\n")
 
 ### create PROFI table
 
@@ -148,14 +180,20 @@ insertScript.writelines([
     Format.wl("COPY profi (spielerid, rank, tournament) FROM stdin WITH (ENCODING 'UTF8');")
 ])
 
-for i in range(1000):
+for i in range(999):
     insertScript.writelines(Format.tab + "(" +
         "{id}".format(id = i + 1) + Format.sep +
         "{rank}".format(rank = rankCounter(i)) + Format.sep +
         "{tour}".format(tour = random.randint(1, 101)) +
         ")," + Format.ret)
 
-insertScript.writelines(";\n\n")
+insertScript.writelines(Format.tab + "(" +
+    "{id}".format(id = 1000) + Format.sep +
+    "{rank}".format(rank = rankCounter(i)) + Format.sep +
+    "{tour}".format(tour = random.randint(1, 101)) +
+    ");" + Format.ret)
+
+insertScript.writelines("\n\n")
 
 ### create BEGINNER table
 
@@ -163,13 +201,18 @@ insertScript.writelines([
     Format.wl("COPY beginner (spielerid, zugelassen) FROM stdin WITH (ENCODING 'UTF8');")
 ])
 
-for i in range(9000):
+for i in range(8999):
     insertScript.writelines(Format.tab + "(" +
         "{id}".format(id = i + 1001) + Format.sep +
         "false" +
         ")," + Format.ret)
 
-insertScript.writelines(";\n\n")
+insertScript.writelines(Format.tab + "(" +
+    "{id}".format(id = 10000) + Format.sep +
+    "false" +
+    ");" + Format.ret)
+
+insertScript.writelines("\n\n")
 
 ### create QUALIFYING table
 
@@ -178,7 +221,7 @@ insertScript.writelines([
 ])
 
 
-for i in range(100):
+for i in range(99):
     qualifyingStartDate = randomDate()
 
     insertScript.writelines(Format.tab + "(" +
@@ -187,7 +230,13 @@ for i in range(100):
         "{end}".format(end = randomEndDate(qualifyingStartDate)) +
         ")," + Format.ret)
 
-insertScript.writelines(";\n\n")
+insertScript.writelines(Format.tab + "(" +
+    "{id}".format(id = 100) + Format.sep +
+    "{start}".format(start = qualifyingStartDate) + Format.sep +
+    "{end}".format(end = randomEndDate(qualifyingStartDate)) +
+    ");" + Format.ret)
+
+insertScript.writelines("\n\n")
 
 ### create QUALIFYING SPIELER table
 
@@ -195,12 +244,17 @@ insertScript.writelines([
     Format.wl("COPY qualifyingspieler (id, Spielerid) FROM stdin WITH (ENCODING 'UTF8');")
 ])
 
-for i in range(9000):
+for i in range(8999):
     insertScript.writelines(Format.tab + "(" +
         "{qID}".format(qID = random.randint(1, 100)) + Format.sep +
         "{sID}".format(sID = i + 1001) +
         ")," + Format.ret)
 
-insertScript.writelines(";\n\n")
+insertScript.writelines(Format.tab + "(" +
+    "{qID}".format(qID = random.randint(1, 100)) + Format.sep +
+    "{sID}".format(sID = 10000) +
+    ");" + Format.ret)
+
+insertScript.writelines("\n")
 
 insertScript.close()
