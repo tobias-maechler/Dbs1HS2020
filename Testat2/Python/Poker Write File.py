@@ -181,12 +181,12 @@ for i in range(999):
     insertScript.writelines(
         "{id}".format(id = i + 1) + Format.sep +
         "{rank}".format(rank = rankCounter(i)) + Format.sep +
-        "{tour}".format(tour = random.randint(1, 101)) + Format.ret)
+        "{tour}".format(tour = random.randint(1, 100)) + Format.ret)
 
 insertScript.writelines(
     "{id}".format(id = 1000) + Format.sep +
     "{rank}".format(rank = rankCounter(i)) + Format.sep +
-    "{tour}".format(tour = random.randint(1, 101)) +
+    "{tour}".format(tour = random.randint(1, 100)) +
     "\n\\." + Format.ret)
 
 insertScript.writelines("\n\n")
