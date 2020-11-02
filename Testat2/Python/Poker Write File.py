@@ -42,12 +42,12 @@ def randomDate():
     day = random.randint(1, 31)
     month = random.randint(1, 12)
     year = random.randint(2015, 2023)
-    return f"'{day:02}-{month:02}-{year}'"
+    return f"{day:02}-{month:02}-{year}"
 
 def randomEndDate(startDate):
-    day = int(startDate[1] + startDate[2])
-    month = int(startDate[4] + startDate[5])
-    year = int(startDate[7] + startDate[8] + startDate[9] + startDate[10])
+    day = int(startDate[0] + startDate[1])
+    month = int(startDate[3] + startDate[4])
+    year = int(startDate[6] + startDate[7] + startDate[8] + startDate[9])
     if day < 20:
         day += random.randint(1, 10)
     elif month < 11:
@@ -55,7 +55,7 @@ def randomEndDate(startDate):
     else:
         year += 1
         month = 1
-    return f"'{day:02}-{month:02}-{year}'"
+    return f"{day:02}-{month:02}-{year}"
 
 def rankCounter(int):
     if int <= 500:
@@ -101,16 +101,16 @@ lastItem = len(data.surNames) - 1
 for i in range(lastItem):
     insertScript.writelines(
         "{id}".format(id = i + 1) + Format.sep +
-        "'{name}'".format(name = data.surNames[i]) + Format.sep +
-        "'{name}'".format(name = data.familyNames[i]) + Format.sep +
+        "{name}".format(name = data.surNames[i]) + Format.sep +
+        "{name}".format(name = data.familyNames[i]) + Format.sep +
         "{prize}".format(prize = data.prizes[i]) + Format.sep +
         "100000" + Format.sep +
         "true" + Format.ret)
 
 insertScript.writelines(
     "{id}".format(id = lastItem + 1) + Format.sep +
-    "'{name}'".format(name = data.surNames[lastItem]) + Format.sep +
-    "'{name}'".format(name = data.familyNames[lastItem]) + Format.sep +
+    "{name}".format(name = data.surNames[lastItem]) + Format.sep +
+    "{name}".format(name = data.familyNames[lastItem]) + Format.sep +
     "{prize}".format(prize = data.prizes[lastItem]) + Format.sep +
     "100000" + Format.sep +
     "true" +
@@ -132,14 +132,14 @@ for i in range(74):
     # Create Syntax
     insertScript.writelines(
         "{id}".format(id = id) + Format.sep +
-        "'{first}'".format(first = names.get_first_name()) + Format.sep +
-        "'{last}'".format(last = names.get_last_name()) + Format.sep +
+        "{first}".format(first = names.get_first_name()) + Format.sep +
+        "{last}".format(last = names.get_last_name()) + Format.sep +
         "{xp}".format(xp = xp) + Format.ret)
 
 insertScript.writelines(
     "{id}".format(id = 75) + Format.sep +
-    "'{first}'".format(first = names.get_first_name()) + Format.sep +
-    "'{last}'".format(last = names.get_last_name()) + Format.sep +
+    "{first}".format(first = names.get_first_name()) + Format.sep +
+    "{last}".format(last = names.get_last_name()) + Format.sep +
     "{xp}".format(xp = xp) +
     "\n\\." + Format.ret)
 
@@ -157,7 +157,7 @@ for i in range(99):
         "24" + Format.sep +
         "{prize}".format(prize = random.randint(10000, 1000000)) + Format.sep +
         "{date}".format(date = randomDate()) + Format.sep +
-        "{place}".format(place = random.choices((Content.places))) + Format.sep +
+        "{place}".format(place = random.choice(Content.places)) + Format.sep +
         "{floorman}".format(floorman = pickFloorman()) + Format.ret)
 
 insertScript.writelines(
