@@ -1,4 +1,5 @@
 -- Autoren: Kevin Löffler & Tobias Mächler
+--psql -U postgres -v ON_ERROR_STOP=on -f 0_runAllScripts.sql
 \echo \conninfo
 \echo
 \echo -n 'client encoding: '\encoding
