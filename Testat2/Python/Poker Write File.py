@@ -39,7 +39,7 @@ def pickFloorman():
         return index
 
 def randomDate():
-    day = random.randint(1, 31)
+    day = random.randint(1, 26)
     month = random.randint(1, 12)
     year = random.randint(2015, 2023)
     return f"{day:02}-{month:02}-{year}"
@@ -48,7 +48,7 @@ def randomEndDate(startDate):
     day = int(startDate[0] + startDate[1])
     month = int(startDate[3] + startDate[4])
     year = int(startDate[6] + startDate[7] + startDate[8] + startDate[9])
-    if day < 20:
+    if day < 16:
         day += random.randint(1, 10)
     elif month < 11:
         month += random.randint(1, 2)
