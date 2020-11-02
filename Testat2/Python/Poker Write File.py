@@ -16,7 +16,7 @@ class Content:
 class Format:
     tab = "\t"
     dTab = "\t\t"
-    sep = ",\t"
+    sep = "\t"
     ret = "\n"
 
     def wl(line):
@@ -99,23 +99,22 @@ insertScript.writelines([
 lastItem = len(data.surNames) - 1
 
 for i in range(lastItem):
-    insertScript.writelines(Format.tab + "(" +
+    insertScript.writelines(
         "{id}".format(id = i + 1) + Format.sep +
         "'{name}'".format(name = data.surNames[i]) + Format.sep +
         "'{name}'".format(name = data.familyNames[i]) + Format.sep +
         "{prize}".format(prize = data.prizes[i]) + Format.sep +
         "100000" + Format.sep +
-        "true" +
-        ")," + Format.ret)
+        "true" + Format.ret)
 
-insertScript.writelines(Format.tab + "(" +
+insertScript.writelines(
     "{id}".format(id = lastItem + 1) + Format.sep +
     "'{name}'".format(name = data.surNames[lastItem]) + Format.sep +
     "'{name}'".format(name = data.familyNames[lastItem]) + Format.sep +
     "{prize}".format(prize = data.prizes[lastItem]) + Format.sep +
     "100000" + Format.sep +
     "true" +
-    ");" + Format.ret)
+    ";" + Format.ret)
 
 insertScript.writelines("\n\n")
 
@@ -131,19 +130,18 @@ for i in range(74):
     xp = random.randint(1, 3)
     floorman[id] = xp
     # Create Syntax
-    insertScript.writelines(Format.tab + "(" +
+    insertScript.writelines(
         "{id}".format(id = id) + Format.sep +
         "'{first}'".format(first = names.get_first_name()) + Format.sep +
         "'{last}'".format(last = names.get_last_name()) + Format.sep +
-        "{xp}".format(xp = xp) +
-        ")," + Format.ret)
+        "{xp}".format(xp = xp) + Format.ret)
 
-insertScript.writelines(Format.tab + "(" +
+insertScript.writelines(
     "{id}".format(id = 75) + Format.sep +
     "'{first}'".format(first = names.get_first_name()) + Format.sep +
     "'{last}'".format(last = names.get_last_name()) + Format.sep +
     "{xp}".format(xp = xp) +
-    ");" + Format.ret)
+    ";" + Format.ret)
 
 insertScript.writelines("\n\n")
 
@@ -154,23 +152,22 @@ insertScript.writelines([
 ])
 
 for i in range(99):
-    insertScript.writelines(Format.tab + "(" +
+    insertScript.writelines(
         "{id}".format(id = i + 1) + Format.sep +
         "24" + Format.sep +
         "{prize}".format(prize = random.randint(10000, 1000000)) + Format.sep +
         "{date}".format(date = randomDate()) + Format.sep +
         "{place}".format(place = random.choices((Content.places))) + Format.sep +
-        "{floorman}".format(floorman = pickFloorman()) +
-        ")," + Format.ret)
+        "{floorman}".format(floorman = pickFloorman()) + Format.ret)
 
-insertScript.writelines(Format.tab + "(" +
+insertScript.writelines(
     "{id}".format(id = 100) + Format.sep +
     "24" + Format.sep +
     "{prize}".format(prize = random.randint(10000, 1000000)) + Format.sep +
     "{date}".format(date = randomDate()) + Format.sep +
     "{place}".format(place = random.choices((Content.places))) + Format.sep +
     "{floorman}".format(floorman = pickFloorman()) +
-    ");" + Format.ret)
+    ";" + Format.ret)
 
 insertScript.writelines("\n\n")
 
@@ -181,17 +178,16 @@ insertScript.writelines([
 ])
 
 for i in range(999):
-    insertScript.writelines(Format.tab + "(" +
+    insertScript.writelines(
         "{id}".format(id = i + 1) + Format.sep +
         "{rank}".format(rank = rankCounter(i)) + Format.sep +
-        "{tour}".format(tour = random.randint(1, 101)) +
-        ")," + Format.ret)
+        "{tour}".format(tour = random.randint(1, 101)) + Format.ret)
 
-insertScript.writelines(Format.tab + "(" +
+insertScript.writelines(
     "{id}".format(id = 1000) + Format.sep +
     "{rank}".format(rank = rankCounter(i)) + Format.sep +
     "{tour}".format(tour = random.randint(1, 101)) +
-    ");" + Format.ret)
+    ";" + Format.ret)
 
 insertScript.writelines("\n\n")
 
@@ -202,15 +198,14 @@ insertScript.writelines([
 ])
 
 for i in range(8999):
-    insertScript.writelines(Format.tab + "(" +
+    insertScript.writelines(
         "{id}".format(id = i + 1001) + Format.sep +
-        "false" +
-        ")," + Format.ret)
+        "false" + Format.ret)
 
-insertScript.writelines(Format.tab + "(" +
+insertScript.writelines(
     "{id}".format(id = 10000) + Format.sep +
     "false" +
-    ");" + Format.ret)
+    ";" + Format.ret)
 
 insertScript.writelines("\n\n")
 
@@ -224,17 +219,16 @@ insertScript.writelines([
 for i in range(99):
     qualifyingStartDate = randomDate()
 
-    insertScript.writelines(Format.tab + "(" +
+    insertScript.writelines(
         "{id}".format(id = i + 1) + Format.sep +
         "{start}".format(start = qualifyingStartDate) + Format.sep +
-        "{end}".format(end = randomEndDate(qualifyingStartDate)) +
-        ")," + Format.ret)
+        "{end}".format(end = randomEndDate(qualifyingStartDate)) + Format.ret)
 
-insertScript.writelines(Format.tab + "(" +
+insertScript.writelines(
     "{id}".format(id = 100) + Format.sep +
     "{start}".format(start = qualifyingStartDate) + Format.sep +
     "{end}".format(end = randomEndDate(qualifyingStartDate)) +
-    ");" + Format.ret)
+    ";" + Format.ret)
 
 insertScript.writelines("\n\n")
 
@@ -245,15 +239,14 @@ insertScript.writelines([
 ])
 
 for i in range(8999):
-    insertScript.writelines(Format.tab + "(" +
+    insertScript.writelines(
         "{qID}".format(qID = random.randint(1, 100)) + Format.sep +
-        "{sID}".format(sID = i + 1001) +
-        ")," + Format.ret)
+        "{sID}".format(sID = i + 1001) + Format.ret)
 
-insertScript.writelines(Format.tab + "(" +
+insertScript.writelines(
     "{qID}".format(qID = random.randint(1, 100)) + Format.sep +
     "{sID}".format(sID = 10000) +
-    ");" + Format.ret)
+    ";" + Format.ret)
 
 insertScript.writelines("\n")
 
