@@ -165,7 +165,7 @@ insertScript.writelines(
     "24" + Format.sep +
     "{prize}".format(prize = random.randint(10000, 1000000)) + Format.sep +
     "{date}".format(date = randomDate()) + Format.sep +
-    "{place}".format(place = random.choices((Content.places))) + Format.sep +
+    "{place}".format(place = random.choice((Content.places))) + Format.sep +
     "{floorman}".format(floorman = pickFloorman()) +
     "\n\\." + Format.ret)
 
