@@ -1,48 +1,47 @@
 
 Spieler (
     ID PK INTEGER,
-    Vorname VARCHAR(80) NOT NULL,
-    Nachname VARCHAR(80) NOT NULL,
+    Vorname VARCHAR(50) NOT NULL,
+    Nachname VARCHAR(50) NOT NULL,
     Gewinn INTEGER NOT NULL,
-    Chipzahl INTEGER,
-    Aktiv BOOLEAN
+    Chipzahl INTEGER NOT NULL,
+    Aktiv BOOLEAN NOT NULL
 )
 
-Profi (
-    SpielerID REFERENCES Spieler,
-    Rank INTEGER,
-    Tournament REFERENCES Tournament
-)
-
-Beginner (
-    SpielerID REFERENCES Spieler,
-    Zugelassen BOOLEAN,
-    Qualifying REFERENCES Qualifying
+Floorman (
+    ID PK INTEGER,
+    Vorname VARCHAR(50) NOT NULL,
+    Nachname VARCHAR(50) NOT NULL,
+    Erfahrung INTEGER NOT NULL
 )
 
 Tournament (
-    ID INTEGER,
+    ID PK INTEGER,
     MaxSpieler INTEGER NOT NULL,
-    Preisgeld INTEGER,
-    Datum DATE,
+    Preisgeld INTEGER NOT NULL,
+    Datum DATE NOT NULL,
     Ort VARCHAR(80) NOT NULL,
     Floorman NOT NULL REFERENCES Floorman
 )
 
+Profi (
+    SpielerID PK REFERENCES Spieler,
+    Rank INTEGER NOT NULL,
+    Tournament REFERENCES Tournament
+)
+
 Qualifying (
-    ID INTEGER,
-    StartDatum DATE,
-    EndeDatum DATE
+    ID PK INTEGER,
+    StartDatum DATE NOT NULL,
+    EndeDatum DATE NOT NULL
+)
+
+Beginner (
+    SpielerID REFERENCES Spieler,
+    Zugelassen BOOLEAN NOT NULL
 )
 
 QualifyingSpieler (
-    ID REFERENCES Qualifying,
+    ID PK REFERENCES Qualifying,
     SpielerID REFERENCES Spieler
-)
-
-Floorman (
-    ID INTEGER,
-    Vorname VARCHAR(80) NOT NULL,
-    Nachname VARCHAR(80) NOT NULL,
-    Erfahrung INTEGER
 )
