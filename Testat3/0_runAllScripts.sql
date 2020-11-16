@@ -1,5 +1,5 @@
 -- Autoren: Kevin Löffler & Tobias Mächler
---psql -U postgres -v ON_ERROR_STOP=on -f 0_runAllScripts.sql
+-- psql -U postgres -v ON_ERROR_STOP=on -f 0_runAllScripts.sql
 \echo \conninfo
 \echo
 \echo -n 'client encoding: '\encoding
@@ -54,11 +54,11 @@ CREATE DATABASE :database WITH OWNER :user ENCODING 'UTF8';
 -- > adjust if the detected default is not what you want
 -- valid values are: 'UTF8', 'LATIN1', 'WIN1252'
 \encoding 'auto'
-
+*/
 \set ECHO queries
 -- query the database
 \ir 5_queries.sql
-
+/*
 \unset ECHO
 -- demonstrate constraints in action
 \ir 6_constraints_tests.sql

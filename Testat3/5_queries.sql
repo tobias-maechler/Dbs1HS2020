@@ -7,89 +7,74 @@ SQL-Datei mit folgenden 4 SQL-Queries, wobei vor jeder Anfrage (Query) ein Komme
 1.4. Eine Query, die eines der vier folgenden Statements enthält (gegebenenfalls mit NOT davor): ANY, IN, EXISTS oder ALL.
 */
 
---Example Taken from AngProj
 
-SELECT name, salaer FROM angestellter WHERE salaer > 5000;
 
-SELECT name, salaer FROM angestellter WHERE wohnort = 'Luzern' AND (salaer < 5000 OR salaer > 8000);
+-- Distinct:
 
-SELECT name, tel FROM angestellter WHERE tel IS NOT NULL ORDER BY name ASC;
+SELECT count(DISTINCT ort) AS "Anzahl Veranstaltungsorte" FROM tournament;
 
-SELECT name, persnr FROM angestellter WHERE name LIKE 'Widmer%';
+-- Join:
 
-SELECT DISTINCT wohnort, name FROM angestellter WHERE abtnr=3 ORDER BY wohnort ASC;
+SELECT spieler.vorname AS "Vorname", spieler.nachname AS "Nachname", tournament.id AS "Tournament Nr.", tournament.ort AS "Austragungsort" FROM spieler JOIN profi ON profi.spielerid = spieler.id JOIN tournament ON profi.tournament = tournament.id LIMIT 20; 
 
-SELECT chef, count(*), avg(salaer) FROM angestellter WHERE chef IS NOT NULL GROUP BY chef
-ORDER BY count(*) DESC, avg(salaer);
+-- Uncorrelated Subquery
 
-SELECT name,salaer AS "tiefstes Salaer" FROM angestellter
-WHERE salaer = (SELECT min(salaer) FROM angestellter);
+SELECT vorname, nachname, gewinn FROM spieler WHERE gewinn > (SELECT AVG(gewinn) FROM spieler WHERE aktiv = true) LIMIT 20;
 
-SELECT count(*), sum (salaer)
-FROM angestellter 
-WHERE persnr IN
-  (SELECT persnr
-   FROM projektzuteilung
-   WHERE projnr =
-     (SELECT projnr
-      FROM projekt
-      WHERE bezeichnung='Mars'
-      )
-  );
+-- Statement:
 
-SELECT abtnr, avg(salaer), count(*)
-FROM angestellter
-GROUP BY abtnr
-  HAVING avg(salaer) <= ALL
-   (SELECT avg(salaer) FROM angestellter
-     GROUP BY abtnr);
+SELECT vorname, nachname FROM spieler s WHERE EXISTS (SELECT * FROM profi WHERE spielerid = s.id) LIMIT 20;
 
-SELECT   name,
-         SUM(zeitanteil)
-FROM     (SELECT name,
-                 zeitanteil,
-                 bezeichnung
-          FROM   angestellter
-                 INNER JOIN projektzuteilung
-                   ON angestellter.persnr = projektzuteilung.persnr
-                 INNER JOIN projekt
-                   ON projektzuteilung.projnr = projekt.projnr
-          WHERE  projekt.bezeichnung LIKE '%Uranus%'
-          UNION
-          SELECT name,
-                 zeitanteil,
-                 bezeichnung
-          FROM   angestellter
-                 INNER JOIN projektzuteilung
-                   ON angestellter.persnr = projektzuteilung.persnr
-                 INNER JOIN projekt
-                   ON projektzuteilung.projnr = projekt.projnr
-          WHERE  projekt.bezeichnung LIKE '%Mars%') AS projekte
-GROUP BY name
-ORDER BY name;
+/*
+2.1 Common Table Expressions/WITH-Statements:
+Schreiben Sie zunächst eine Anfrage mit einer unkorrelierten Unterabfrage und dokumentieren Sie diese (einfacher Kommentar vor dem SQL).
+Formen Sie dann diese Subquery um in eine Common Table Expression.
+Ihre Abgabe muss sowohl die Query mit unkorrelierten Unterabfrage (vor der Umformung) als auch die Query mit Common Table Expression enthalten.
+2.2 GROUP-BY und Window-Funktionen:
+Schreiben Sie eine sinnvolle Query mit einer GROUP BY-Klausel.
+Schreiben Sie eine sinnvolle Query mit einer Window-Funktion.
+*/
 
-SELECT persnr
-FROM   angestellter
-WHERE  chef IS NULL
-EXCEPT
-SELECT persnr
-FROM   projektzuteilung
-       INNER JOIN projekt
-         ON projektzuteilung.projnr = projekt.projnr
-WHERE  bezeichnung LIKE '%Uranus%';
+-- Uncorrelated Subquery
 
--- do not alter contents of the database persistently
-BEGIN;
+SELECT vorname, nachname, gewinn FROM spieler JOIN beginner ON spieler.id = beginner.spielerid WHERE gewinn > (SELECT AVG(gewinn) FROM spieler) LIMIT 20;
 
-CREATE VIEW gutverdienende AS
-SELECT * FROM angestellter
-WHERE salaer > 8000;
+--  Converted to Common Table Expression:
+WITH 
+aboveAverage AS
+(SELECT id, vorname, nachname, gewinn FROM spieler WHERE gewinn > (SELECT AVG(gewinn) FROM spieler)),
+allBeginner AS
+(SELECT spieler.id FROM spieler JOIN beginner ON spieler.id = beginner.spielerid)
+SELECT aboveAverage.vorname, aboveAverage.nachname, aboveAverage.gewinn FROM aboveAverage JOIN allBeginner ON aboveAverage.id = allBeginner.id LIMIT 20;
 
-SELECT * FROM gutverdienende;
 
-UPDATE angestellter SET salaer = salaer*1.2;
+-- 2.2 GROUP-BY und Window-Funktion:
 
-SELECT * FROM gutverdienende;
+--GROUP-BY:
 
--- forget all changes made since BEGIN
-ROLLBACK;
+SELECT ort AS "Veranstaltungs Ort", COUNT(*) AS "Anzahl Turniere" FROM tournament GROUP BY ort LIMIT 20;
+
+
+-- Window Function: 
+
+SELECT vorname AS "Vorname", nachname AS "Nachname", gewinn AS "Gewinn", gewinn - lead(gewinn,1,gewinn) OVER (ORDER BY gewinn) AS "Vergleich" FROM spieler ORDER BY 3 DESC LIMIT 20;
+
+
+/*
+3.1 Views:
+Schreiben Sie eine View, die mindestens drei Tabellen umfasst.
+Schreiben Sie dann eine normale Query, welche diese View verwendet.
+3.2 Schreiben Sie eine zweite View (also eine "einfachere" View), die sich updaten lässt. Testen Sie, dass die View sich wirklich updaten lässt, wie folgt:
+View schreiben (Tipp: Beschränkungen von PostgreSQL beachten, so dass die View "updateable" ist).
+Eine Änderung eines bestimmten Datensatzes über diese View schreiben mittels UPDATE (UPDATE <Ihre View> SET ... WHERE ...;).
+*/
+
+-- 3.1
+CREATE VIEW Teilnehmer AS SELECT spieler.vorname AS "Vorname", spieler.nachname AS "Nachname", tournament.id AS "Tournament Nr.", tournament.ort AS "Austragungsort" FROM spieler JOIN profi ON profi.spielerid = spieler.id JOIN tournament ON profi.tournament = tournament.id;
+SELECT * FROM Teilnehmer LIMIT 20;
+
+--3.2
+CREATE VIEW ChipLeader AS SELECT vorname, nachname, chipzahl FROM spieler ORDER BY chipzahl DESC; -- Create View
+SELECT vorname, chipzahl FROM ChipLeader WHERE vorname LIKE 'Bryn'; -- Check current Chip Count
+UPDATE ChipLeader SET chipzahl = 10 WHERE vorname LIKE 'Bryn'; -- Update Chip Count
+SELECT vorname, chipzahl FROM ChipLeader WHERE vorname LIKE 'Bryn'; -- Check new Chip Count
