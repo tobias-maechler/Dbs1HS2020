@@ -45,7 +45,7 @@ CREATE DATABASE :database WITH OWNER :user ENCODING 'UTF8';
 
 -- create primary keys, constraints, indexes
 --\ir 4_constraints.sql
-/*
+
 \echo
 \prompt 'Execute Queries (\\q or Ctrl-C to abort)?' promptvar
 :promptvar
@@ -54,12 +54,7 @@ CREATE DATABASE :database WITH OWNER :user ENCODING 'UTF8';
 -- > adjust if the detected default is not what you want
 -- valid values are: 'UTF8', 'LATIN1', 'WIN1252'
 \encoding 'auto'
-*/
+
 \set ECHO queries
 -- query the database
 \ir 5_queries.sql
-/*
-\unset ECHO
--- demonstrate constraints in action
-\ir 6_constraints_tests.sql
-*/
