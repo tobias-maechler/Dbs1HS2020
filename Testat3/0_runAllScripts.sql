@@ -6,7 +6,7 @@
 \echo
 
 SET client_min_messages = ERROR;
-\set user pokeruser 
+\set user pokeruser
 \set password '\'poker\''
 \set database poker
 \set promptvar ''
@@ -58,3 +58,5 @@ CREATE DATABASE :database WITH OWNER :user ENCODING 'UTF8';
 \set ECHO queries
 -- query the database
 \ir 5_queries.sql
+
+\echo 'End of scirpt. View the source code including the webscraper and python code-generation-script at https://github.com/tobias-maechler/Dbs1HS2020'
