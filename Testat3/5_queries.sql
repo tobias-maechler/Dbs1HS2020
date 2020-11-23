@@ -10,19 +10,19 @@ SELECT count(DISTINCT ort) AS "Anzahl Veranstaltungsorte" FROM tournament;
 \prompt 'Execute Join Query (\\q or Ctrl-C to abort)?' promptvar
 :promptvar
 
-SELECT spieler.vorname AS "Vorname", spieler.nachname AS "Nachname", tournament.id AS "Tournament Nr.", tournament.ort AS "Austragungsort" FROM spieler JOIN profi ON profi.spielerid = spieler.id JOIN tournament ON profi.tournament = tournament.id LIMIT 20;
+SELECT spieler.vorname AS "Vorname", spieler.nachname AS "Nachname", tournament.id AS "Tournament Nr.", tournament.ort AS "Austragungsort" FROM spieler JOIN profi ON profi.spielerid = spieler.id JOIN tournament ON profi.tournament = tournament.id ORDER BY spieler.nachname LIMIT 20;
 
 -- 1.3 Uncorrelated Subquery
 \prompt 'Execute Uncorrelated Subquery (\\q or Ctrl-C to abort)?' promptvar
 :promptvar
 
-SELECT vorname, nachname, gewinn FROM spieler WHERE gewinn > (SELECT AVG(gewinn) FROM spieler WHERE aktiv = true) LIMIT 20;
+SELECT vorname, nachname, gewinn FROM spieler WHERE gewinn > (SELECT AVG(gewinn) FROM spieler WHERE aktiv = true) ORDER BY gewinn DESC LIMIT 20;
 
 -- 1.4 Statement:
 \prompt 'Execute Query with Exists Statement (\\q or Ctrl-C to abort)?' promptvar
 :promptvar
 
-SELECT vorname, nachname FROM spieler s WHERE EXISTS (SELECT * FROM profi WHERE spielerid = s.id) LIMIT 20;
+SELECT vorname, nachname FROM spieler s WHERE EXISTS (SELECT * FROM profi WHERE spielerid = s.id) ORDER BY nachname LIMIT 20;
 
 
 -- 2.1 Common Table Expressions/WITH-Statements:
@@ -30,7 +30,7 @@ SELECT vorname, nachname FROM spieler s WHERE EXISTS (SELECT * FROM profi WHERE 
 \prompt 'Execute uncorrelated Subquery (\\q or Ctrl-C to abort)?' promptvar
 :promptvar
 
-SELECT vorname, nachname, gewinn FROM spieler JOIN beginner ON spieler.id = beginner.spielerid WHERE gewinn > (SELECT AVG(gewinn) FROM spieler) LIMIT 20;
+SELECT vorname, nachname, gewinn FROM spieler JOIN beginner ON spieler.id = beginner.spielerid WHERE gewinn > (SELECT AVG(gewinn) FROM spieler) ORDER BY gewinn DESC LIMIT 20;
 
 -- Converted to Common Table Expression:
 \prompt 'Execute Common Table Expression Query (\\q or Ctrl-C to abort)?' promptvar
@@ -40,7 +40,7 @@ aboveAverage AS
 (SELECT id, vorname, nachname, gewinn FROM spieler WHERE gewinn > (SELECT AVG(gewinn) FROM spieler)),
 allBeginner AS
 (SELECT spieler.id FROM spieler JOIN beginner ON spieler.id = beginner.spielerid)
-SELECT aboveAverage.vorname, aboveAverage.nachname, aboveAverage.gewinn FROM aboveAverage JOIN allBeginner ON aboveAverage.id = allBeginner.id LIMIT 20;
+SELECT aboveAverage.vorname, aboveAverage.nachname, aboveAverage.gewinn FROM aboveAverage JOIN allBeginner ON aboveAverage.id = allBeginner.id ORDER BY gewinn DESC LIMIT 20;
 
 
 -- 2.2 GROUP-BY und Window-Funktion:
@@ -49,7 +49,7 @@ SELECT aboveAverage.vorname, aboveAverage.nachname, aboveAverage.gewinn FROM abo
 \prompt 'Execute GROUP-BY Query (\\q or Ctrl-C to abort)?' promptvar
 :promptvar
 
-SELECT ort AS "Veranstaltungs Ort", COUNT(*) AS "Anzahl Turniere" FROM tournament GROUP BY ort LIMIT 20;
+SELECT ort AS "Veranstaltungs Ort", COUNT(*) AS "Anzahl Turniere" FROM tournament GROUP BY ort ORDER BY ort LIMIT 20;
 
 -- Window Function:
 \prompt 'Execute Window Function Query (\\q or Ctrl-C to abort)?' promptvar
