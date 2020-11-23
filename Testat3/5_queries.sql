@@ -10,7 +10,7 @@ SELECT count(DISTINCT ort) AS "Anzahl Veranstaltungsorte" FROM tournament;
 \prompt 'Execute Join Query (\\q or Ctrl-C to abort)?' promptvar
 :promptvar
 
-SELECT spieler.vorname AS "Vorname", spieler.nachname AS "Nachname", tournament.id AS "Tournament Nr.", tournament.ort AS "Austragungsort" FROM spieler JOIN profi ON profi.spielerid = spieler.id JOIN tournament ON profi.tournament = tournament.id LIMIT 20; 
+SELECT spieler.vorname AS "Vorname", spieler.nachname AS "Nachname", tournament.id AS "Tournament Nr.", tournament.ort AS "Austragungsort" FROM spieler JOIN profi ON profi.spielerid = spieler.id JOIN tournament ON profi.tournament = tournament.id LIMIT 20;
 
 -- 1.3 Uncorrelated Subquery
 \prompt 'Execute Uncorrelated Subquery (\\q or Ctrl-C to abort)?' promptvar
@@ -33,9 +33,9 @@ SELECT vorname, nachname FROM spieler s WHERE EXISTS (SELECT * FROM profi WHERE 
 SELECT vorname, nachname, gewinn FROM spieler JOIN beginner ON spieler.id = beginner.spielerid WHERE gewinn > (SELECT AVG(gewinn) FROM spieler) LIMIT 20;
 
 -- Converted to Common Table Expression:
-\prompt 'Execute Comon Table Expression Query (\\q or Ctrl-C to abort)?' promptvar
+\prompt 'Execute Common Table Expression Query (\\q or Ctrl-C to abort)?' promptvar
 :promptvar
-WITH 
+WITH
 aboveAverage AS
 (SELECT id, vorname, nachname, gewinn FROM spieler WHERE gewinn > (SELECT AVG(gewinn) FROM spieler)),
 allBeginner AS
@@ -51,7 +51,7 @@ SELECT aboveAverage.vorname, aboveAverage.nachname, aboveAverage.gewinn FROM abo
 
 SELECT ort AS "Veranstaltungs Ort", COUNT(*) AS "Anzahl Turniere" FROM tournament GROUP BY ort LIMIT 20;
 
--- Window Function: 
+-- Window Function:
 \prompt 'Execute Window Function Query (\\q or Ctrl-C to abort)?' promptvar
 :promptvar
 
@@ -74,7 +74,7 @@ CREATE VIEW ChipLeader AS SELECT vorname, nachname, chipzahl FROM spieler ORDER 
 \prompt 'Check the chipcount before update the view (\\q or Ctrl-C to abort)?' promptvar
 :promptvar
 
-SELECT vorname, chipzahl FROM ChipLeader WHERE vorname LIKE 'Bryn'; 
+SELECT vorname, chipzahl FROM ChipLeader WHERE vorname LIKE 'Bryn';
 
 \prompt 'Updating the view and set chipcount to 10 (\\q or Ctrl-C to abort)?' promptvar
 :promptvar
