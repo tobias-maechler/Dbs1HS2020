@@ -42,12 +42,12 @@ def randomDate():
     day = random.randint(1, 26)
     month = random.randint(1, 12)
     year = random.randint(2015, 2023)
-    return f"{day:02}-{month:02}-{year}"
+    return f"{year}-{month:02}-{day:02}"
 
 def randomEndDate(startDate):
-    day = int(startDate[0] + startDate[1])
-    month = int(startDate[3] + startDate[4])
-    year = int(startDate[6] + startDate[7] + startDate[8] + startDate[9])
+    year = int(startDate[0] + startDate[1] + startDate[2] + startDate[3])
+    month = int(startDate[5] + startDate[6])
+    day = int(startDate[8] + startDate[9])
     if day < 16:
         day += random.randint(1, 10)
     elif month < 11:
@@ -55,7 +55,7 @@ def randomEndDate(startDate):
     else:
         year += 1
         month = 1
-    return f"{day:02}-{month:02}-{year}"
+    return f"{year}-{month:02}-{day:02}"
 
 def rankCounter(int):
     if int <= 500:
@@ -83,7 +83,7 @@ def rankCounter(int):
 
 ############ Write File: ############
 
-insertScript = File_object = open(r"/Users/Kevin1/Kevin/Study/Sem1/Dbs/Testat2/Python/Export/inserts python.sql", "w")
+insertScript = File_object = open(r"/Users/Kevin1/Kevin/Study/Sem1/Dbs/Testat3/Python/Export/inserts python.sql", "w")
 
 # Write Comments
 insertScript.writelines([Format.wl("-- Autoren: Kevin Löffler & Tobias Mächler")])
