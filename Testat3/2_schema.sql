@@ -5,7 +5,7 @@ CREATE TABLE spieler (
     vorname VARCHAR(50) NOT NULL,
     nachname VARCHAR(50) NOT NULL,
     gewinn INTEGER NOT NULL,
-    chipzahl INTEGER NOT NULL,
+    chipzahl INTEGER NOT NULL CHECK (chipzahl >= 0),
     aktiv BOOLEAN
 );
 
