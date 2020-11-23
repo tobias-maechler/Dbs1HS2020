@@ -27,6 +27,7 @@ DROP USER if exists :user;
 
 CREATE USER :user WITH PASSWORD :password;
 CREATE DATABASE :database WITH OWNER :user ENCODING 'UTF8';
+\echo
 \c :database :user
 
 -- specify encoding to match your files encoding, usually UTF8
@@ -37,15 +38,18 @@ CREATE DATABASE :database WITH OWNER :user ENCODING 'UTF8';
 --\ir 1_extensions.sql
 
 -- create schema
+\echo
 \echo 'run 2_schema.sql'
 \ir 2_schema.sql
 
 -- insert data in slo-mo or use COPY for speedup
 --\ir 3_inserts.sql
+\echo
 \echo 'run 3_inserts.sql'
 \ir 3_inserts.sql
 
 -- create primary keys, constraints, indexes
+\echo
 \echo 'run 4_constraints.sql'
 \ir 4_constraints.sql
 
@@ -62,4 +66,4 @@ CREATE DATABASE :database WITH OWNER :user ENCODING 'UTF8';
 -- query the database
 \ir 5_queries.sql
 
-\echo 'End of script. View the source code including the webscraper and python code-generation-script at https://github.com/tobias-maechler/Dbs1HS2020'
+\echo 'End of script. View the source code including the webscraper and python script at https://github.com/tobias-maechler/Dbs1HS2020'
