@@ -41,7 +41,7 @@ CREATE DATABASE :database WITH OWNER :user ENCODING 'UTF8';
 
 -- insert data in slo-mo or use COPY for speedup
 --\ir 3_inserts.sql
-\ir 3_copy.sql
+\ir 3_inserts.sql
 
 -- create primary keys, constraints, indexes
 --\ir 4_constraints.sql
